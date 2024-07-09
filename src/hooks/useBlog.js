@@ -69,7 +69,7 @@ const useBlog = () => {
 
     const addBlog = () => {
         const newBlog = {
-            image: URL.createObjectURL(image),
+            image,
             title,
             description,
             date: new Date().toLocaleDateString()
@@ -80,10 +80,13 @@ const useBlog = () => {
         }
 
         setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
-        setTitle('');
-        setDescription('');
+        setImage("")
+        setTitle("");
+        setDescription("");
         setErrors({});
+        
         closeSuccessModal();
+      
     };
 
     return {
