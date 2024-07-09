@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useModal from './useModal';
 
 const useBlog = () => {
-    const { closeModal: closeSucessModal } = useModal();
+    const { closeModal: closeSuccessModal } = useModal();
 
     const initialBlogs = () => {
         const initialBlog = localStorage.getItem('blogs');
@@ -10,14 +10,20 @@ const useBlog = () => {
         return JSON.parse(initialBlog) || [];
     }
     const [blogs, setBlogs] = useState(initialBlogs);
+    const [image, setImage] = useState("");
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        localStorage.setItem("blogs",JSON.stringify(blogs))
+        localStorage.setItem("blogs", JSON.stringify(blogs))
     }, [blogs])
-
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file)
+        }
+    }
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
         clearErrors('titleError');
@@ -63,9 +69,10 @@ const useBlog = () => {
 
     const addBlog = () => {
         const newBlog = {
+            image: URL.createObjectURL(image),
             title,
             description,
-            date: new Date().getFullYear()
+            date: new Date().toLocaleDateString()
         };
 
         if (!validateField()) {
@@ -76,19 +83,21 @@ const useBlog = () => {
         setTitle('');
         setDescription('');
         setErrors({});
-        closeSucessModal();
+        closeSuccessModal();
     };
-    console.log(blogs)
+
     return {
         blogs,
         setBlogs,
+        image,
+        handleImageChange,
         title,
         handleTitleChange,
         description,
         handleDescriptionChange,
         errors,
         addBlog,
-        closeSucessModal
+        closeSuccessModal
     };
 };
 

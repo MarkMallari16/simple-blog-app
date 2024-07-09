@@ -16,7 +16,7 @@ function App() {
         </div>
         <div className='mt-10 mx-10 grid grid-cols-1 lg:grid-cols-3 place-content-center gap-10'>
           {blogs.map((blog, index) => ( 
-            <BlogCard key={index} title={blog.title} description={blog.description} date={blog.date} />
+            <BlogCard key={index} image={blog.image} title={blog.title} description={blog.description} date={blog.date} />
           ))}
         </div>
 

@@ -3,18 +3,21 @@ import useBlog from '../../hooks/useBlog'
 
 const FormModal = ({ isOpen, onClose }) => {
     const { blogs,
+        image,
+        handleImageChange,
         title,
         handleTitleChange,
         description,
         handleDescriptionChange,
         errors,
-        addBlog, closeSucessModal } = useBlog();
+        addBlog, closeSuccessModal } = useBlog();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         addBlog();
+        closeSuccessModal();
     }
-
+    console.log(image);
     return (
         <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
             <div className="modal-box">
@@ -22,7 +25,7 @@ const FormModal = ({ isOpen, onClose }) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <h3 className="font-medium text-lg mb-1">Image:</h3>
-                        <input type="file" className="file-input file-input-bordered w-full" />
+                        <input type="file" onChange={handleImageChange} className="file-input file-input-bordered w-full" />
                     </div>
                     <div className='mt-4'>
                         <h3 className="font-medium text-lg mb-1">Title:</h3>
