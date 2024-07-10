@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import useModal from './useModal';
+
 
 const useBlog = () => {
-    const { closeModal: closeSuccessModal } = useModal();
-    screenY
+
+
     const initialBlogs = () => {
         const initialBlog = localStorage.getItem('blogs');
 
@@ -16,10 +16,19 @@ const useBlog = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         localStorage.setItem("blogs", JSON.stringify(blogs))
     }, [blogs])
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    }
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         const validTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -40,7 +49,7 @@ const useBlog = () => {
             };
             reader.readAsDataURL(file);
             clearErrors("imageError");
-           
+
         }
     }
     const handleTitleChange = (e) => {
@@ -99,7 +108,7 @@ const useBlog = () => {
         };
 
         if (!validateField()) {
-            return;
+            return false;
         }
 
         setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
@@ -107,14 +116,17 @@ const useBlog = () => {
         setTitle("");
         setDescription("");
         setErrors({});
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
-        closeSuccessModal();
 
+        if (fileInputRef.current) fileInputRef.current.value = "";
+
+        setIsModalOpen(false)
+        return true;
     };
 
     return {
+        isModalOpen,
+        openModal,
+        closeModal,
         blogs,
         setBlogs,
         fileInputRef,
@@ -126,7 +138,7 @@ const useBlog = () => {
         handleDescriptionChange,
         errors,
         addBlog,
-        closeSuccessModal
+
     };
 };
 

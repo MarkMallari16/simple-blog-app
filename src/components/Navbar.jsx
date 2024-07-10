@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import FormModal from './modal/FormModal';
-import useModal from '../hooks/useModal';
+import useBlog from '../hooks/useBlog';
 
 const Navbar = () => {
-    const { openModal, isModalOpen, closeModal } = useModal();
+    const { openModal, isModalOpen, closeModal } = useBlog();
     return (
         <div className="navbar bg-base-100 flex justify-between p-6">
             <div className="btn btn-ghost text-2xl">DevDiary</div>

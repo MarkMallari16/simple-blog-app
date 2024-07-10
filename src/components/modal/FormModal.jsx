@@ -2,7 +2,8 @@ import React from 'react'
 import useBlog from '../../hooks/useBlog'
 
 const FormModal = ({ isOpen, onClose }) => {
-    const { blogs,
+    const {
+        blogs,
         fileInputRef,
         image,
         handleImageChange,
@@ -11,14 +12,14 @@ const FormModal = ({ isOpen, onClose }) => {
         description,
         handleDescriptionChange,
         errors,
-        addBlog, closeSuccessModal } = useBlog();
+        addBlog } = useBlog();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         addBlog();
-        closeSuccessModal();
+
     }
-    console.log(image);
+    console.log(blogs)
     return (
         <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
             <div className="modal-box">
@@ -26,7 +27,7 @@ const FormModal = ({ isOpen, onClose }) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <h3 className="font-medium text-lg mb-1">Image:</h3>
-                        <input type="file" onChange={handleImageChange} className="file-input file-input-bordered w-full" ref={fileInputRef}/>
+                        <input type="file" onChange={handleImageChange} className="file-input file-input-bordered w-full" ref={fileInputRef} />
                         {errors.imageError && <p className='text-red-500 mt-1'>{errors.imageError}</p>}
                     </div>
                     <div className='mt-4'>
