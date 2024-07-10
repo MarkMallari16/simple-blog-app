@@ -19,6 +19,7 @@ const useBlog = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [blogTitle, setBlogTitle] = useState("");
+    const [singleBlog, setSingleBlog] = useState({});
 
     useEffect(() => {
         localStorage.setItem("blogs", JSON.stringify(blogs))
@@ -33,16 +34,19 @@ const useBlog = () => {
     }
 
     const openEditModal = (title) => {
+        setIsEditModalOpen(true);
         const blog = blogs.find((blog) => blog.title === title);
 
         if (blog) {
+
             setImage(blog.image);
             setTitle(blog.title);
             setDescription(blog.description);
-            setBlogTitle(title);
-            setIsEditModalOpen(true);
-            console.log(blog)
+            setBlogTitle(title)
+            setSingleBlog(blog);
+
         }
+
     }
 
     const closeEditModal = () => {
@@ -128,6 +132,7 @@ const useBlog = () => {
 
     }
     const addBlog = () => {
+        console.log("add click")
         const newBlog = {
             image,
             title,
@@ -145,21 +150,21 @@ const useBlog = () => {
         return true;
     };
     const updateBlog = () => {
-  
         setBlogs((previousBlogs) =>
             previousBlogs.map((blog) =>
-                blog.title === blogTitle ? { ...blog, image, title, description } : blog));
-        resetForm();
-    
-    
-    }
+                blog.title === blogTitle ? { ...blog, image, title, description } : blog)
+        );
+        resetForm(); // Ensure resetForm clears the form and related state
+    };
     return {
         isModalOpen,
         openModal,
         closeModal,
         isEditModalOpen,
+        blogTitle,
         openEditModal,
         closeEditModal,
+        singleBlog,
         blogs,
         setBlogs,
         fileInputRef,

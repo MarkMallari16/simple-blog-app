@@ -8,7 +8,7 @@ import Navbar from './components/Navbar'
 import useBlog from './hooks/useBlog'
 
 function App() {
-  const { isModalOpen, closeModal, blogs, isEditModalOpen, closeEditModal } = useBlog();
+  const { isModalOpen, closeModal, blogs } = useBlog();
 
   return (
     <>
@@ -27,7 +27,7 @@ function App() {
           )}
 
       </div>
-      <FormModal isOpen={isModalOpen} onClose={closeModal} />
+     
     
     </>
   )

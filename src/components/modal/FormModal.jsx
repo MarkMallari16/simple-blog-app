@@ -17,9 +17,8 @@ const FormModal = ({ isOpen, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addBlog();
-
     }
- 
+    console.log(isOpen)
     return (
         <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
             <div className="modal-box">

@@ -4,7 +4,11 @@ import useBlog from '../../hooks/useBlog'
 import EditFormModal from '../modal/EditFormModal';
 
 const BlogCard = ({ image, title, description, date }) => {
-    const { blogs, setBlogs, openEditModal, isEditModalOpen, closeEditModal } = useBlog();
+    const { singleBlog, blogs, setBlogs, openEditModal, isEditModalOpen, closeEditModal, fileInputRef,
+        handleImageChange,
+        handleTitleChange,
+        handleDescriptionChange,
+        errors } = useBlog();
 
     const handleDeleteBlog = (title) => {
         setBlogs(blogs.filter(blog => blog.title !== title))
@@ -31,10 +35,21 @@ const BlogCard = ({ image, title, description, date }) => {
                     </Link>
 
                 </div>
-                <button className='mt-2 btn btn-primary' onClick={() => openEditModal(title)}>Edit</button>
+                <button className='mt-2 btn btn-primary' onClick={() => openEditModal(title)} >Edit</button>
                 <button className='mt-2 btn btn-error' onClick={() => handleDeleteBlog(title)}>Delete Blog</button>
             </div>
-            <EditFormModal isEditOpen={isEditModalOpen} onEditClose={closeEditModal} />
+            {isEditModalOpen && <EditFormModal
+                singleBlog={singleBlog}
+                fileInputRef={fileInputRef}
+                isEditOpen={isEditModalOpen}
+                onEditClose={closeEditModal}
+                title={title}
+                image={image}
+                description={description}
+                errors={errors}
+                onImageChange={handleImageChange}
+                onTitleChange={handleTitleChange}
+                onDescriptionChange={handleDescriptionChange} />}
         </div>
 
     )
