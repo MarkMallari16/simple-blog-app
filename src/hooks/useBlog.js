@@ -31,6 +31,7 @@ const useBlog = () => {
         setIsModalOpen(false);
 
     }
+
     const openEditModal = (title) => {
         const blog = blogs.find((blog) => blog.title === title);
 
@@ -42,8 +43,8 @@ const useBlog = () => {
             setIsEditModalOpen(true);
             console.log(blog)
         }
-
     }
+
     const closeEditModal = () => {
         setIsEditModalOpen(false);
     }
@@ -144,13 +145,13 @@ const useBlog = () => {
         return true;
     };
     const updateBlog = () => {
-
+  
         setBlogs((previousBlogs) =>
             previousBlogs.map((blog) =>
                 blog.title === blogTitle ? { ...blog, image, title, description } : blog));
         resetForm();
-        closeEditModal();
-        return true;
+    
+    
     }
     return {
         isModalOpen,

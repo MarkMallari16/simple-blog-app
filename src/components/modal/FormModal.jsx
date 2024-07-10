@@ -19,7 +19,7 @@ const FormModal = ({ isOpen, onClose }) => {
         addBlog();
 
     }
-    console.log(blogs)
+ 
     return (
         <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
             <div className="modal-box">

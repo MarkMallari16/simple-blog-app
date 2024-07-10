@@ -17,6 +17,7 @@ const EditFormModal = ({ isEditOpen, onEditClose }) => {
         updateBlog();
 
     }
+    console.log(title)
     return (
         <dialog className={`modal ${isEditOpen ? 'modal-open' : ''}`}>
             <div className="modal-box">
