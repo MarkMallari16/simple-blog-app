@@ -2,12 +2,13 @@
 import './App.css'
 import BlogCard from './components/card/BlogCard'
 import Footer from './components/Footer'
+import EditFormModal from './components/modal/EditFormModal'
 import FormModal from './components/modal/FormModal'
 import Navbar from './components/Navbar'
 import useBlog from './hooks/useBlog'
 
 function App() {
-  const { isModalOpen, closeModal, blogs } = useBlog();
+  const { isModalOpen, closeModal, blogs, isEditModalOpen, closeEditModal } = useBlog();
 
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
 
       </div>
       <FormModal isOpen={isModalOpen} onClose={closeModal} />
+    
     </>
   )
 }

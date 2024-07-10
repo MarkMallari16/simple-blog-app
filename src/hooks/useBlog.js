@@ -17,6 +17,8 @@ const useBlog = () => {
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [blogTitle, setBlogTitle] = useState("");
 
     useEffect(() => {
         localStorage.setItem("blogs", JSON.stringify(blogs))
@@ -27,6 +29,23 @@ const useBlog = () => {
     }
     const closeModal = () => {
         setIsModalOpen(false);
+
+    }
+    const openEditModal = (title) => {
+        const blog = blogs.find((blog) => blog.title === title);
+
+        if (blog) {
+            setImage(blog.image);
+            setTitle(blog.title);
+            setDescription(blog.description);
+            setBlogTitle(title);
+            setIsEditModalOpen(true);
+            console.log(blog)
+        }
+
+    }
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
     }
 
     const handleImageChange = (e) => {
@@ -98,7 +117,15 @@ const useBlog = () => {
 
         return isValid;
     };
+    const resetForm = () => {
+        setImage("")
+        setTitle("");
+        setDescription("");
+        setErrors({});
 
+        if (fileInputRef.current) fileInputRef.current.value = "";
+
+    }
     const addBlog = () => {
         const newBlog = {
             image,
@@ -112,21 +139,26 @@ const useBlog = () => {
         }
 
         setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
-        setImage("")
-        setTitle("");
-        setDescription("");
-        setErrors({});
+        resetForm();
 
-        if (fileInputRef.current) fileInputRef.current.value = "";
-
-        setIsModalOpen(false)
         return true;
     };
+    const updateBlog = () => {
 
+        setBlogs((previousBlogs) =>
+            previousBlogs.map((blog) =>
+                blog.title === blogTitle ? { ...blog, image, title, description } : blog));
+        resetForm();
+        closeEditModal();
+        return true;
+    }
     return {
         isModalOpen,
         openModal,
         closeModal,
+        isEditModalOpen,
+        openEditModal,
+        closeEditModal,
         blogs,
         setBlogs,
         fileInputRef,
@@ -138,6 +170,7 @@ const useBlog = () => {
         handleDescriptionChange,
         errors,
         addBlog,
+        updateBlog
 
     };
 };
