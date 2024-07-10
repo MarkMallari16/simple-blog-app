@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useModal from './useModal';
 
 const useBlog = () => {
     const { closeModal: closeSuccessModal } = useModal();
-
+    screenY
     const initialBlogs = () => {
         const initialBlog = localStorage.getItem('blogs');
 
         return JSON.parse(initialBlog) || [];
     }
+    const fileInputRef = useRef(null);
+
     const [blogs, setBlogs] = useState(initialBlogs);
     const [image, setImage] = useState("");
     const [title, setTitle] = useState('');
@@ -20,8 +22,25 @@ const useBlog = () => {
     }, [blogs])
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+        const validTypes = ["image/jpeg", "image/png", "image/gif"];
+
         if (file) {
-            setImage(file)
+            if (!validTypes.includes(file.type)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    imageError: "Invalid file type. Only JPG, PNG, and GIF are allowed."
+                }));
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result);
+                console.log(reader.result);
+            };
+            reader.readAsDataURL(file);
+            clearErrors("imageError");
+           
         }
     }
     const handleTitleChange = (e) => {
@@ -47,6 +66,10 @@ const useBlog = () => {
         let isValid = true;
         const newErrors = {};
 
+        if (!image) {
+            newErrors.imageError = "Image is required!";
+            isValid = false;
+        }
         if (title.trim() === '') {
             newErrors.titleError = 'Title Field is required!';
             isValid = false;
@@ -84,14 +107,17 @@ const useBlog = () => {
         setTitle("");
         setDescription("");
         setErrors({});
-        
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
         closeSuccessModal();
-      
+
     };
 
     return {
         blogs,
         setBlogs,
+        fileInputRef,
         image,
         handleImageChange,
         title,

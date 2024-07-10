@@ -3,6 +3,7 @@ import useBlog from '../../hooks/useBlog'
 
 const FormModal = ({ isOpen, onClose }) => {
     const { blogs,
+        fileInputRef,
         image,
         handleImageChange,
         title,
@@ -25,7 +26,8 @@ const FormModal = ({ isOpen, onClose }) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <h3 className="font-medium text-lg mb-1">Image:</h3>
-                        <input type="file" onChange={handleImageChange} className="file-input file-input-bordered w-full" />
+                        <input type="file" onChange={handleImageChange} className="file-input file-input-bordered w-full" ref={fileInputRef}/>
+                        {errors.imageError && <p className='text-red-500 mt-1'>{errors.imageError}</p>}
                     </div>
                     <div className='mt-4'>
                         <h3 className="font-medium text-lg mb-1">Title:</h3>
