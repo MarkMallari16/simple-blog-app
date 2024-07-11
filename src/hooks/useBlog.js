@@ -38,15 +38,8 @@ const useBlog = () => {
         const blog = blogs.find((blog) => blog.title === title);
 
         if (blog) {
-
-            setImage(blog.image);
-            setTitle(blog.title);
-            setDescription(blog.description);
             setBlogTitle(title)
-            setSingleBlog(blog);
-
         }
-
     }
 
     const closeEditModal = () => {
@@ -132,7 +125,7 @@ const useBlog = () => {
 
     }
     const addBlog = () => {
-        console.log("add click")
+      
         const newBlog = {
             image,
             title,
@@ -144,7 +137,7 @@ const useBlog = () => {
             return false;
         }
 
-        setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
+        setBlogs((prevBlogs) => [newBlog, ...prevBlogs,]);
         resetForm();
 
         return true;

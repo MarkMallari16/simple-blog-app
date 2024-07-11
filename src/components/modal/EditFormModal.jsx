@@ -41,7 +41,7 @@ const EditFormModal = ({
                         <input
                             type="text"
                             placeholder="Enter Blog Title"
-                            value={singleBlog.title}
+                            value={title}
                             onChange={onTitleChange}
                             className="input input-bordered w-full"
                         />
@@ -51,7 +51,7 @@ const EditFormModal = ({
                         <h3 className="font-medium text-lg mb-1">Description:</h3>
                         <textarea
                             className="textarea textarea-bordered resize-none w-full h-52"
-                            value={singleBlog.description}
+                            value={description}
                             onChange={onDescriptionChange}
                             placeholder="Enter Description"
                         ></textarea>

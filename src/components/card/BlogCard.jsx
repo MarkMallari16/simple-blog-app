@@ -20,7 +20,7 @@ const BlogCard = ({ image, title, description, date }) => {
                 <img
                     src={image}
                     alt="blog-image"
-                    className='object-cover select-none h-52' />
+                    className='object-cover select-none h-52 w-full' />
             </figure>
             <div className="card-body w-full">
                 <h2 className="card-title">{title}</h2>
